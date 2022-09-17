@@ -35,7 +35,7 @@ Rat: {
         render: (a method to display the rat on screen)
 }
 LevelPlatform: {
-    constructor(parameters to come later)
+    constructor(complete parameters to come later)
         x: (x location on the canvas)
         y: (y location on the canvas)
         height: (should be constant and only a fraction of the canvas)
@@ -43,13 +43,19 @@ LevelPlatform: {
         render: (a method to draw plaforms on screen)
     }
 WaterHazard: {
-    constructor(parameters to come later)
+    constructor(complete parameters to come later)
         x: (x location on the canvas)
         y: (y location on the canvas)
         height: (should be enough to cover between platforms)
         width: (should be constant)
         active: (a boolean of whether they are on screen to avoid)
         render: (a method to render methods on screen)
+}
+Pipe: {
+    construction(complete parameters to come later)
+        x: (location on the canvas)
+        y: (location on the canvas)
+        height: ()
 }
 
 function gameLoop - holds the entire logic that runs the game
