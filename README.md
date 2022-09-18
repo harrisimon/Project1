@@ -14,6 +14,7 @@ As a user, I want the ability to...
 * run forward and backward through the level.  
 * use the arrow keys to move.  
 * see the timer.  
+* see the current 'grime' level.
 * jump over gaps using the 'space' key.  
 * advance in each level.  
 * see a screen fade for each level screen.  
