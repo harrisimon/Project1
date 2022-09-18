@@ -3,18 +3,22 @@
 For my project I will create a platformer called 'Sewer Rat'.
 With the user playing as a rat they will try to navigate through the sewer, jumping over platforms, and avoiding water geysers that spray out at unexpecting times. The rat will start with a 'Grime level' of 3 which goes down if a gap jump is missed or they are sprayed with water. The goal will be to escape the sewer before the timer ends without the grime level going down to zero.
 
+## Technologies Used
+- HTML-canvas  
+- CSS  
+- Javascript
 
 ## User stories
 As a user, I want the ability to...  
-*see a title screen and hit 'space' to start.  
-*run forward and backward through the level.  
-*use the arrow keys to move.  
-*see the timer.  
-*jump over gaps using the 'space' key.  
-*advance in each level.  
-*see a screen fade for each level screen.  
-*reload the game.  
-*finish the game by escaping the sewer.  
+* see a title screen and hit 'space' to start.  
+* run forward and backward through the level.  
+* use the arrow keys to move.  
+* see the timer.  
+* jump over gaps using the 'space' key.  
+* advance in each level.  
+* see a screen fade for each level screen.  
+* reload the game.  
+* finish the game by escaping the sewer.  
 
 ## Wireframes
 ![sewer-rat-wireframe](/sewer-rat-wireframe.png)Start screen and level layout
