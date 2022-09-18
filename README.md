@@ -27,46 +27,46 @@ As a user, I want the ability to...
 
 ## Entity Relationship Diagram
 ###
-Rat: {
-    constructor(complete parameters to come later)
-        x: (x location on the canvas)  
-        y: (y location on the canvas)  
-        height: (should fit between level platforms)  
-        width: (should be smaller than water hazards  
-                and only a fraction of level vertical height)  
-        speed: (to smoothly move and track)  
-        velocity: (for player to fall)  
-        onPlatform: (to track when the rat is on a platform, eg not falling or jumping)  
-        grimeLevel: (a number representing how many tries remain)  
-        render: (a method to display the rat on screen)  
-}
+                Rat: {
+                    constructor(complete parameters to come later)
+                        x: (x location on the canvas)  
+                        y: (y location on the canvas)  
+                        height: (should fit between level platforms)  
+                        width: (should be smaller than water hazards  
+                                and only a fraction of level vertical height)  
+                        speed: (to smoothly move and track)  
+                        velocity: (for player to fall)  
+                        onPlatform: (to track when the rat is on a platform, eg not falling or jumping)  
+                        grimeLevel: (a number representing how many tries remain)  
+                        render: (a method to display the rat on screen)  
+                }
 ###
-LevelPlatform: {  
-    constructor(complete parameters to come later)  
-        x: (x location on the canvas)  
-        y: (y location on the canvas)  
-        height: (should be constant and only a fraction of the canvas)  
-        width: (should vary depending on level drawing)  
-        render: (a method to draw plaforms on screen)  
-    }
+                LevelPlatform: {  
+                    constructor(complete parameters to come later)  
+                        x: (x location on the canvas)  
+                        y: (y location on the canvas)  
+                        height: (should be constant and only a fraction of the canvas)  
+                        width: (should vary depending on level drawing)  
+                        render: (a method to draw plaforms on screen)  
+                    }
 ###
-WaterHazard: {  
-    constructor(complete parameters to come later)  
-        x: (x location on the canvas)  
-        y: (y location on the canvas)  
-        height: (should be enough to cover between platforms)  
-        width: (should be constant)  
-        active: (a boolean of whether they are on screen to avoid)  
-        render: (a method to render methods on screen)  
-}
+                WaterHazard: {  
+                    constructor(complete parameters to come later)  
+                        x: (x location on the canvas)  
+                        y: (y location on the canvas)  
+                        height: (should be enough to cover between platforms)  
+                        width: (should be constant)  
+                        active: (a boolean of whether they are on screen to avoid)  
+                        render: (a method to render methods on screen)  
+                }
 ###
-Pipe: {
-    construction(complete parameters to come later)  
-        x: (location on the canvas)  
-        y: (location on the canvas)  
-        height: (constant)  
-        width: (constant)  
-}
+                Pipe: {
+                    construction(complete parameters to come later)  
+                        x: (location on the canvas)  
+                        y: (location on the canvas)  
+                        height: (constant)  
+                        width: (constant)  
+                }
 ###
 function - gameLoop - holds the entire logic that runs the game  
 function - timer - sets the timer to countdown and ends the game at zero  
