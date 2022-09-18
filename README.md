@@ -6,15 +6,15 @@ With the user playing as a rat they will try to navigate through the sewer, jump
 
 ## User stories
 As a user, I want the ability to...
--see a title screen and hit 'space' to start.
--run forward and backward through the level.
--use the arrow keys to move.
--see the timer.
--jump over gaps using the 'space' key.
--advance in each level.
--see a screen fade for each level screen.
--reload the game.
--finish the game by escaping the sewer.
+*see a title screen and hit 'space' to start.
+*run forward and backward through the level.
+*use the arrow keys to move.
+*see the timer.
+*jump over gaps using the 'space' key.
+*advance in each level.
+*see a screen fade for each level screen.
+*reload the game.
+*finish the game by escaping the sewer.
 
 ## Wireframes
 ![sewer-rat-wireframe](/sewer-rat-wireframe.png)Start screen and level layout
