@@ -19,10 +19,10 @@ As a user, I want the ability to...
 * advance in each level.  
 * see a screen fade for each level screen.  
 * reload the game.  
-* finish the game by escaping the sewer.  
+* finish the game by escaping the sewer.   
 
 ## Wireframes
-![sewer-rat-wireframe](/sewer-rat-wireframe.png)Start screen and level layout
+![sewer-rat-wireframe](/sewer-rat-complete.png)Start screen and level layout
 ,
 ![rat](/rat.png)Rat pixel character
 
