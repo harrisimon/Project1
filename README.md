@@ -81,8 +81,9 @@ function - drawLevel - used to draw the level screens
 
 
 ## Schedule
-Monday - Project planning, pseudo-coding, asset and level generation
-Tuesday - write out classes and canvas context to start placing items
-Wednesday - gameLoop function (including platform detection and movement and gravity)
-Thursday - continue gameLoop function (including timer and collision detection)
-Friday - gameLoop finishing
+- Monday - Project planning, pseudo-coding, asset and level generation
+- Tuesday - write out classes and canvas context to start placing items
+- Wednesday - gameLoop function (including platform detection and movement and gravity)
+- Thursday - continue gameLoop function (including timer and collision detection)
+- Friday - gameLoop finishing
+- Weekend - polish and continue and leftover work
