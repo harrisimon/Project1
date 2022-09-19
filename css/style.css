@@ -1,0 +1,59 @@
+body{
+    font-family: 'Rubik Puddles', cursive;
+    font-weight: 100;
+    background-image: linear-gradient(rgb(219, 212, 194), rgb(172, 168, 158));
+    height: 100%;
+    margin: 0;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+#title{
+    font-size: 4rem;
+}
+main{
+    /* border: 2px solid pink; */
+    display: flex;
+    align-items: center;
+    flex-flow: column wrap;
+    justify-content: center;
+
+}
+canvas{
+    background-color: darkblue;
+    justify-content: center;
+    /* border: 5px solid blue; */
+    height: 500px;
+    width: 500px;
+}
+#hud{
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    display: inline-flex;
+    flex-direction: row;
+    width: 500px;
+    justify-content: space-between;
+}
+#grime {
+    /* flex: 1 1 auto; */
+    flex-direction: row;
+    justify-content: flex-start;
+    width: 180px;
+    flex-flow: row;
+}
+#time{
+    /* flex: 1 1 auto; */
+    justify-content: flex-end;
+}
+#grimelevel1{
+    display: flex;
+    background-color: rgb(31, 150, 110);
+    width: 20px;
+    height: 40px;
+    margin: 1px;
+}
+#grimelevel2{
+    display: flex;
+    background-color: rgb(31, 150, 110);
+    width: 20px;
+    height: 40px;
+}
+
