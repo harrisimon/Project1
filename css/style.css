@@ -9,6 +9,7 @@ body{
 }
 #title{
     font-size: 4rem;
+    text-shadow:3px rgb(31, 150, 110);
 }
 main{
     /* border: 2px solid pink; */
@@ -55,5 +56,8 @@ canvas{
     background-color: rgb(31, 150, 110);
     width: 20px;
     height: 40px;
+}
+#rat{
+    display: none;
 }
 
