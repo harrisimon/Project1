@@ -20,7 +20,7 @@ main{
 
 }
 canvas{
-    background-color: darkblue;
+    background-color: rgb(158, 112, 88);
     justify-content: center;
     /* border: 5px solid blue; */
     height: 500px;
@@ -58,6 +58,9 @@ canvas{
     height: 40px;
 }
 #rat{
+    display: none;
+}
+#water{
     display: none;
 }
 
