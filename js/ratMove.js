@@ -1,11 +1,8 @@
-const MoveDirection = {
-
-    direction:{
-        up: false,
-        down: false,
-        left: false,
-        right: false
+const MoveDirection ={
+        up: 0,
+        down: 1,
+        left: 2,
+        right: 3
     }
-}
 
 export default MoveDirection

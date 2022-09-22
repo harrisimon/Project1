@@ -1,43 +1,56 @@
 <!DOCTYPE html>
 
 <html>
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title></title>
-        <meta name="description" content="">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="/css/style.css">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Rubik+Puddles&display=swap" rel="stylesheet">
-
-       
-    </head>
-    <body>
-        <div id="container">
-            <main>
-                <aside><h1 id="title">Sewer Rat!</h1></aside>
-                <canvas id="canvas">
-                    <!--game goes here-->
-                </canvas>
-                <div id="hud">
-                    <div id="grime">
-                        <h2>Grime</h2> 
-                        <span id="grimelevel1"></span>
-                        <span id="grimelevel2"></span>
-                        <span id="grimelevel3"></span>
-                    </div>
-                    <img id="rat" src="../imgs/rat.png">
-                    <img id="water" src="../imgs/waterspout.png">
-                    <span id="time"><h2><a>3:00 </a>Time</h2></span>
-                </div>
-                
-            </main>
-            
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title></title>
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Rubik+Puddles&display=swap"
+      rel="stylesheet"/>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Rubik:wght@300&display=swap"
+      rel="stylesheet"/>
+  </head>
+  <body>
+    <div id="container">
+      <main>
+        <aside><h1 id="title">Sewer Rat!</h1></aside>
+        <canvas id="canvas">
+          <!--game goes here-->
+        </canvas>
+        <div id="hud">
+          <div id="grime">
+            <h2>Grime 3</h2>
+            <span id="grimelevel1"></span>
+            <span id="grimelevel2"></span>
+            <span id="grimelevel3"></span>
+          </div>
+          <img id="rat" src="../imgs/rat.png" />
+          <img id="water" src="../imgs/waterspout.png" />
+          <span id="time"
+            ><h2><a id="sec">60 </a>Time</h2></span
+          >
         </div>
-       
-       
-        
-        <script src="js/game.js" type="module" async defer></script>
-    </body>
+      </main>
+      <div id="overlay">
+        <div id="text">
+          <h1 id="greeting">Hey you big rat!</h1>
+          <p>
+            Escape the maze before your time or grime go to zero.<br />
+            <small>Click to start, arrows to move.</small>
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <button id="reset">Reset</button>
+
+    <script src="js/game.js" type="module" async defer></script>
+  </body>
 </html>
