@@ -18,7 +18,7 @@ export default class TileMap {
   map = [
     [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
     [9, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 1],
-    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 4, 0, 1],
+    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 3, 0, 1],
     [1, 0, 0, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 4, 1],
     [1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
     [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
@@ -32,10 +32,11 @@ export default class TileMap {
     [1, 4, 0, 0, 4, 0, 4, 0, 0, 4, 0, 0, 0, 0, 1],
     [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1],
   ]
-
+  walls = []
 
   //loop through to read tile and draw
   draw(ctx) {
+    const water = []
     for (let row = 0; row < this.map.length; row++) {
       for (let column = 0; column < this.map[row].length; column++) {
         let tile = this.map[row][column]
@@ -43,11 +44,15 @@ export default class TileMap {
           this.#drawWall(ctx, column, row, this.tileSize)
         } else if (tile === 0) {
           this.#drawPath(ctx, column, row, this.tileSize)
+        } else if (tile === 3){
+            water.push(new WaterHazard(ctx, column, row, this.tileSize))
+
         }
         // ctx.strokeStyle = 'yellow'
         // ctx.strokeRect(column * this.tileSize, row * this.tileSize, this.tileSize, this.tileSize)
       }
     }
+  
   }
   //private draw method for path for rat
   #drawPath(ctx, column, row, size) {
@@ -109,7 +114,10 @@ export default class TileMap {
     canvas.width = this.map[0].length * this.tileSize
     canvas.height = this.map.length * this.tileSize
   }
+
   //collision detection---still not working
+
+// 
 // collisionDetection() {
 //     for (let y = 0; y < this.map.length; y++) {
 //       for (let x = 0; x < this.map[y].length; x++) {

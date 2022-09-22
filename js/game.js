@@ -1,10 +1,12 @@
 import TileMap from "./tileMap.js"
+import Rat from "./rat.js"
 
 //vars
 const tileSize = 32
 const speed = 1
 const active = null
 let startTime = 60
+let grime = 3
 
 //getting the canvas
 const game = document.getElementById('canvas')
@@ -23,13 +25,24 @@ const resetButton = document.getElementById('reset')
 resetButton.addEventListener('click', resetGame())
 
 
+//fix timer logic
+//starting the game with click
+const messageOff =() =>{
+    document.getElementById("start-overlay").style.display = "none";
+    const timerInterval = setInterval(timer, 1000)
+    timer()
+}
 
 const timer = () => {
-    if(time.innerHTML === 0){
-        clear
+
+    if(time.innerHTML !== 0 + ' '){
+        time.innerHTML = startTime + ' '
+        startTime--
+    } else if (time.innerHTML === 0 + " " || grime === 0){
+        clearInterval(timerInterval)
+
     }
-    time.innerHTML = startTime + ' '
-    startTime--
+
 }
 
 
@@ -41,20 +54,17 @@ const water = tileMap.getWater(active)
 function gameLoop(){
     tileMap.draw(ctx)
     rat.draw(ctx)
-    water.forEach(water=>water.draw(ctx)) 
+    water.forEach(water=>water.draw(ctx))
+    // console.log(rat.y,rat.x)
 }
 
 tileMap.setCanvasSize(canvas)
+
 gameLoop()
 setInterval(gameLoop, 1000/60)
 
-//starting the game with click
-const messageOff =() =>{
-    document.getElementById("overlay").style.display = "none";
-    const timerInterval = setInterval(timer, 1000)
-    timer()
-}
-const message = document.getElementById('overlay')
+
+const message = document.getElementById('start-overlay')
 message.addEventListener('click', messageOff)
 
 

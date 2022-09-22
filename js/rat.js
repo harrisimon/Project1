@@ -8,18 +8,18 @@ export default class Rat {
     this.tileSize = tileSize,
     this.speed = speed,
     this.tileMap = tileMap,
-    this.goLeft = false
-    this.goRight = true
-    this.goUp = false
-    this.goDown = false
     this.keys = []
+    this.up = false,
+    this.down = false,
+    this.right = false,
+    this.left = false
 
     document.addEventListener("keydown", this.setDirection)
     document.addEventListener("keyup", this.unsetDirection)
     this.#loadRatPics()
   }
   draw(ctx) {
-    this.move()
+
     this.respawn()
 
     ctx.drawImage(
@@ -43,23 +43,13 @@ export default class Rat {
 
     this.ratPicIndex = 0
   }
-  move() {
 
-    if (this.keys.includes("ArrowRight")) {
-      this.x += this.speed
-    } else if (this.keys.includes("ArrowLeft")) {
-      return (this.x -= this.speed)
-    } else if (this.keys.includes("ArrowDown")) {
-      return (this.y += this.speed)
-    } else if (this.keys.includes("ArrowUp")) {
-      return (this.y -= this.speed)
-    }
-  }
   //   }
   setDirection = (event) => {
     if (event.key === "ArrowRight") {
+    
       this.keys.push(event.key)
-      this.requestedMovingDirection = this.keys.at(-1)
+      this.requestedMovingDirection = 'ArrowRight'
     } else if (event.key === "ArrowLeft") {
       this.keys.push(event.key)
       this.requestedMovingDirection = this.keys.at(-1)
@@ -72,9 +62,27 @@ export default class Rat {
     }
   }
   unsetDirection = () => {
-    if (this.keys.length >= 0) {
-      this.keys = []
+    //if not blocked
+    if (this.requestedMovingDirection === 'ArrowRight'){
+        this.x+=32
+        this.requestedMovingDirection = null
+    //if not blocked
+    } else if (this.requestedMovingDirection === 'ArrowLeft'){
+        this.x-=32
+        this.requestedMovingDirection = null
+    //if not blocked
+    } else  if (this.requestedMovingDirection === 'ArrowDown'){
+        this.y+=32
+        this.requestedMovingDirection = null
+    //if not blocked
+    } else if (this.requestedMovingDirection === 'ArrowUp'){
+        this.y-=32
+        this.requestedMovingDirection = null
     }
+    // if (this.keys.length >= 0) {
+    // // this.speed = 0
+    //   this.keys = []
+    // }
   }
   respawn = () => {
     //add in collision detection for hazards later

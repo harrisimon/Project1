@@ -40,7 +40,7 @@ canvas{
 
 }
 
-#overlay {
+#start-overlay {
     position: fixed;
     display: visible;
     width: 100%;
@@ -49,11 +49,12 @@ canvas{
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: rgba(0,0,0,0.75);
+    background-color: rgba(0,0,0,.9);
     z-index: 1;
     cursor: pointer;   
 }
-#text{
+
+#start-text{
     font-family: 'Rubik', sans-serif;
     position: absolute;
     top: 35%;
@@ -64,6 +65,20 @@ canvas{
     -ms-transform: translate(-50%,-50%);
     z-index:2;
     text-align: center;
+
+  }
+  #endtext{
+    font-family: 'Rubik', sans-serif;
+    position: absolute;
+    top: 35%;
+    left: 50%;
+    font-size: 50px;
+    color: white;
+    transform: translate(-50%,-50%);
+    -ms-transform: translate(-50%,-50%);
+    z-index:2;
+    text-align: center;
+    display: none;
   }
 small{
     font-size: .5em;
@@ -80,6 +95,6 @@ button{
     bottom: 19em;
 
 }
-#greeting {
+#greeting,#lose {
     font-family: 'Rubik Puddles', cursive;
 }
