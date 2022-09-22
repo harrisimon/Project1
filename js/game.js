@@ -55,6 +55,7 @@ function gameLoop(){
     tileMap.draw(ctx)
     rat.draw(ctx)
     water.forEach(water=>water.draw(ctx))
+    tileMap.collide(rat.currCell)
     // console.log(rat.y,rat.x)
 }
 

@@ -1,8 +1,8 @@
 export default class WaterHazard {
-  constructor(x, y, tileSize,speed, tileMap) {
+  constructor(x, y, tileSize,active, tileMap) {
     this.x = x, this.y = y, this.tileSize = tileSize,
     this.active = true,
-    this.speed = speed,
+    // this.speed = speed,
     this.tileMap = tileMap,
     this.#loadWater()
   }

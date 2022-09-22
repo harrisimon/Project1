@@ -26,6 +26,8 @@ main{
 canvas{
     background-color: rgb(158, 112, 88);
     justify-content: center;
+    box-shadow: 10px 10px 30px grey;
+    /* box-shadow:  10px 10px 40px grey; */
 
 }
 #hud{
