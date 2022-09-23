@@ -25,11 +25,11 @@ const timerInterval = ()=>{
 //getting the timer
 const time = document.getElementById('sec')
 
-const startMessage = document.getElementById('start-overlay')
-startMessage.addEventListener('click', messageOff)
+// const startMessage = document.getElementById('start-overlay')
+// startMessage.addEventListener('click', messageOff)
 
 const endMessage = document.getElementById('end-overlay')
-
+console.log(endMessage)
 const timer = () => {
     if(time.innerHTML !== 0 + ' '){
         time.innerHTML = startTime + ' '
@@ -59,7 +59,6 @@ class TileMap {
 		this.mazePath.src = "../imgs/mazePath.png"
 		this.wall = new Image()
 		this.wall.src = "../imgs/grimeTile.png"
-        this.allWalls = []
 	}
 
 	//1 walls
@@ -83,7 +82,7 @@ class TileMap {
 		[1, 3, 0, 0, 3, 0, 3, 0, 0, 3, 0, 0, 0, 0, 1],
 		[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1],
 	]
-	walls = []
+
 
 	//loop through to read tile and draw
 	draw(ctx) {
@@ -141,29 +140,7 @@ class TileMap {
 			}
 		}
 	}
-    //collision detection---still not working
-	// collide() {
 
-	// 	for (let row = 0; row < this.map.length; row++) {
-    //         console.log(row)
-	// 		for (let col = 0; col < this.map[row].length; col++) {
-    //             // console.log(col)
-	// 			const currTile = this.map[row][col]
-    //             // console.log(currTile)
-    //             if (currTile === 1){
-    //                 // console.log(rat.x)
-    //                 // console.log(col)
-    //                 if (rat.x > currTile[col]*tileSize && rat.x <= (currTile[col]* tileSize) + tileSize +1){
-    //                     console.log(rat.x)
-    //                     return rat.leftBlocked = true
-    //                 } else {
-    //                     return rat.leftBlocked = false
-    //                 }
-    //                 // if (rat.currCell.y >= curTileCoord.y && rat.y <= curTileCoord.y + this.tileSize){
-
-    //                 // }
-    //             }
-    //         }
 	// 			// const curTileCoord = {
 	// 			// 	x: col * this.tileSize,
 	// 			// 	y: row * this.tileSize,
@@ -216,7 +193,6 @@ class TileMap {
 
 
 }
-
 
 
 //adding rat to the board
@@ -383,11 +359,10 @@ function gameLoop(){
 function collide() {
 
     for (let row = 0; row < tileMap.map.length; row++) {
-        console.log(row)
+        // console.log(row)
         for (let col = 0; col < tileMap.map[row].length; col++) {
-
             const currTile = tileMap.map[row][col]
-
+            // console.log(currTile)
             if (currTile === 1){
 
                 if (rat.x > currTile[col]*tileSize && rat.x <= (currTile[col]* tileSize) + tileSize +1){
@@ -396,6 +371,7 @@ function collide() {
                 } else {
                     return rat.leftBlocked = false
                 }
+                // if (rat.y > currTile[row]*tileSize && rat.y <= currTile[])
                 // if (rat.currCell.y >= curTileCoord.y && rat.y <= curTileCoord.y + this.tileSize){
 
                 // }
