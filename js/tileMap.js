@@ -18,7 +18,7 @@ export default class TileMap {
 	//3 water
 	map = [
 		[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-		[9, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 1],
+		[9, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 0, 1],
 		[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 3, 1],
 		[1, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 3, 0, 1],
 		[1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
@@ -92,7 +92,7 @@ export default class TileMap {
 			}
 		}
 	}
-	//adding water hazard to tile map---still not working
+	//adding water hazard to tile map
 	getWater(active) {
 		const water = []
 		for (let row = 0; row < this.map.length; row++) {
@@ -101,7 +101,7 @@ export default class TileMap {
 				if (tile === 3) {
 					this.map[row][column] = 0
 					water.push(
-						new WaterHazard(
+						new WaterHazard1(
 							column * this.tileSize,
 							row * this.tileSize,
 							this.tileSize,
@@ -109,7 +109,18 @@ export default class TileMap {
 							this
 						)
 					)
-				}
+				} else if (tile === 4){
+                    this.map[row][column] = 0
+					water.push(
+						new WaterHazard2(
+							column * this.tileSize,
+							row * this.tileSize,
+							this.tileSize,
+							active,
+							this
+						)
+					)
+                }
 			}
 		}
 		return water
@@ -161,18 +172,17 @@ export default class TileMap {
 }
 
 
-class WaterHazard {
+class WaterHazard1 {
 	constructor(x, y, tileSize, tileMap, active) {
 		this.x = x,
 		this.y = y,
 		this.tileSize = tileSize,
-			// this.active = active,
+		this.active = active,
 		this.tileMap = tileMap,
 		this.#loadWater()
 		setInterval(this.setActive, 250)
 		this.setActive()
 	}
-
 	draw(ctx) {
 		if (active) {
 			ctx.drawImage(
@@ -192,6 +202,40 @@ class WaterHazard {
 	}
 	setActive() {
 		this.active = Math.random() < 0.5
+        // console.log("1st",this.active)
+	}
+}
+class WaterHazard2 {
+	constructor(x, y, tileSize, tileMap, active) {
+		this.x = x,
+		this.y = y,
+		this.tileSize = tileSize,
+		this.active = active,
+		this.tileMap = tileMap,
+		this.#loadWater()
+		setInterval(this.setActive, 250)
+		this.setActive()
+	}
+	draw(ctx) {
+		if (active) {
+			ctx.drawImage(
+				this.image,
+				this.x,
+				this.y,
+				this.tileSize,
+				this.tileSize
+			)
+		}
+	}
+
+	#loadWater() {
+		this.water = new Image()
+		this.water.src = "../imgs/water-spout.png"
+		this.image = this.water
+	}
+	setActive() {
+		this.active = Math.random() < 0.1
+        // console.log("2nd",this.active)
 	}
 }
 

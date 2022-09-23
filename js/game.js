@@ -53,7 +53,6 @@ const timer = () => {
     } else if (time.innerHTML === 0 + " " || grime === 0){
         clearInterval(timerInterval)
     }
-
 }
 // console.log(tileMap.allWalls)
  //game lose 
@@ -93,22 +92,43 @@ const updateWater = () => {
 }
 
 
-// const collide =()=> {
+
+
+// function collide() {
+        
 //     for (let row = 0; row < tileMap.length; row++) {
-//         console.log(row)
 //         for (let col = 0; col < tileMap[row].length; col++) {
-//             const currTile = tileMap[row][col]
-//             if (currTile === 1){
-//                 if (rat.currCell.x >= currTile.cord.x && rat.x <= curTileCoord.x + this.tileSize){
-//                     console.log(rat.currCell.x)
+//             const currTile = this.map[row][col]
+//             console.log(currTile)
+//             if (tileMap.currTile === 1){   
+//                 console.log(rat.x)
+//                 if (rat.x >= currTile.cord.x && rat.x <= curTileCoord.x + this.tileSize){
+
 //                     return rat.leftBlocked = true
 //                 }
-//                 if (rat.currCell.y >= curTileCoord.y && rat.y <= curTileCoord.y + this.tileSize){
-//                     return rat.downBlocked = true
+//                 // if (rat.x tileMap.cur)
+//                 if (rat.y >= currTile.coord.y && rat.y <= curTileCoord.y + this.tileSize){
+//                     return
 //                 }
 //             }
 //         }
-//     }
+//             // const curTileCoord = {
+//             // 	x: col * this.tileSize,
+//             // 	y: row * this.tileSize,
+//             // }
+//             //check 
+           
+//             // console.log(curTileCoord)
+//             //use rat currCell and requesteddirection to calculate if there's a hit
+//             // if rat.requestedDirection === ArrowUp && rat.currCell.y - this.tileSize === contains(wallCell)
+//                 // block
+//             //if rat.requestedDirection === ArrowRight && rat.currCell.x + this.tileSize === wallCell
+//                 //block
+//             //if rat.requestedDirection === ArrowLeft && rat.currCell.x - this.tileSize === wallCell
+//                 //block
+//             //if rat.requestedDirection === ArrowDown && rat.currCell.y + this.tileSize === wallCell
+//                 //block
+//         }
     
 // }
-
+// collide()
