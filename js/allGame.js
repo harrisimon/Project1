@@ -30,16 +30,21 @@ const time = document.getElementById('sec')
 
 const endMessage = document.getElementById('end-overlay')
 console.log(endMessage)
+
 const timer = () => {
-    if(time.innerHTML !== 0 + ' '){
-        time.innerHTML = startTime + ' '
-        startTime--
-    } else if (time.innerHTML === 0 + " " || grime === 0){
-
-        endMessage.style.display = 'visible'
-        clearInterval(timerInterval)
-
+    while(startTime> 0){
+        startTime-=1
+        console.log(startTime)
     }
+    // if(time.innerHTML !== 0 + ' '){
+    //     time.innerHTML = startTime + ' '
+    //     startTime--
+    // } else if (startTime === 0|| grime === 0){
+    //     console.log("hi")
+    //     endMessage.style.display = 'visible'
+    //     clearInterval(timerInterval)
+
+    // }
 }
 
 //getting the reset button
@@ -50,6 +55,7 @@ resetButton.addEventListener('click',  ()=> {
         rat.x = 0, rat.y = tileSize
         startTime = 60
         grime = 3
+        gameLoop()
 })
 
 class TileMap {
@@ -140,28 +146,8 @@ class TileMap {
 			}
 		}
 	}
-
-	// 			// const curTileCoord = {
-	// 			// 	x: col * this.tileSize,
-	// 			// 	y: row * this.tileSize,
-	// 			// }
-    //             //check 
-               
-	// 			// console.log(curTileCoord)
-    //             //use rat currCell and requesteddirection to calculate if there's a hit
-    //             // if rat.requestedDirection === ArrowUp && rat.currCell.y - this.tileSize === contains(wallCell)
-    //                 // block
-    //             //if rat.requestedDirection === ArrowRight && rat.currCell.x + this.tileSize === wallCell
-    //                 //block
-    //             //if rat.requestedDirection === ArrowLeft && rat.currCell.x - this.tileSize === wallCell
-    //                 //block
-    //             //if rat.requestedDirection === ArrowDown && rat.currCell.y + this.tileSize === wallCell
-    //                 //block
-	// 		}
-		
-	// }
 	//adding water hazard to tile map
-	getWater(active) {
+	getWater() {
 		const water = []
 		for (let row = 0; row < this.map.length; row++) {
 			for (let column = 0; column < this.map[row].length; column++) {
@@ -187,10 +173,6 @@ class TileMap {
 		canvas.width = this.map[0].length * this.tileSize
 		canvas.height = this.map.length * this.tileSize
 	}
- 
-	
-
-
 
 }
 
@@ -207,7 +189,7 @@ class Rat {
       this.upBlocked = false,
       this.downBlocked = false,
       this.rightBlocked = false,
-      this.leftBlocked = null,
+      this.leftBlocked = false,
       this.currCell = {
           x: null,
           y: null
@@ -299,10 +281,12 @@ class Rat {
       return this.currCell
     }
   }
+  
   //   respawn = () => {
   //     //add in collision detection for hazards later
-  //     // if (this.x === 200){
+  //     // if (colliding with water tile and water[idx].active === true){
   //     //     this.x = 0
+        //      grime-=1
   //     // }
     }
       }}
@@ -314,12 +298,13 @@ class WaterHazard {
             this.tileSize = tileSize,
             this.active = active,
             this.tileMap = tileMap,
-            this.#loadWater()
-            setInterval(this.setActive, 250)
-            this.setActive()
+            this.loadWater()
+
         }
         draw(ctx) {
-            if (active) {
+            //boolean for turning on the water
+            if (Math.random() < .15){
+                this.active = false
                 ctx.drawImage(
                     this.image,
                     this.x,
@@ -327,19 +312,21 @@ class WaterHazard {
                     this.tileSize,
                     this.tileSize
                 )
+            } else {
+                this.active = true
             }
+            
         }
     
-        #loadWater() {
+        loadWater() {
             this.water = new Image()
             this.water.src = "../imgs/water-spout.png"
             this.image = this.water
         }
-        setActive() {
-            this.active = Math.random() < 0.5
-            // console.log("1st",this.active)
-        }
+
     }
+
+
 
 //instantiating tile map, rat, water hazards
 const tileMap = new TileMap(tileSize)
@@ -351,33 +338,71 @@ function gameLoop(){
     tileMap.draw(ctx)
     collide()
     rat.draw(ctx)
-    // tileMap.collide(rat.currCell)
     water.forEach(water=>water.draw(ctx))
-  
+    // checkcollision()
+    // gameWin()
+    // console.log(water[0].active)
+
 }
+
 
 function collide() {
 
-    for (let row = 0; row < tileMap.map.length; row++) {
-        // console.log(row)
-        for (let col = 0; col < tileMap.map[row].length; col++) {
-            const currTile = tileMap.map[row][col]
-            // console.log(currTile)
-            if (currTile === 1){
+    for (let row = 0; row < 14; row++) {
+        for (let col = 0; col < tileMap.map[row].length; col++) {   
+             
+            if(tileMap.map[row][col]===1){
+                // console.log(currTile)
+                let x = col * tileSize
+                let y = row * tileSize
+                // console.log(x, y)
 
-                if (rat.x > currTile[col]*tileSize && rat.x <= (currTile[col]* tileSize) + tileSize +1){
-                    console.log(rat.x)
+                // console.log("yes")
+						// this.tileSize,
+						// speed,
+						// this
+                if (rat.x >= x && rat.x < x + tileSize && rat.y > y && rat.y < y -tileSize){
+                    console.log("hello")
                     return rat.leftBlocked = true
-                } else {
-                    return rat.leftBlocked = false
                 }
-                // if (rat.y > currTile[row]*tileSize && rat.y <= currTile[])
-                // if (rat.currCell.y >= curTileCoord.y && rat.y <= curTileCoord.y + this.tileSize){
+                // if can't go up
+                //return rat blocked up
+                //
+            
+                }
+            //         console.log(rat.x)
+            //         return rat.leftBlocked = true
+            //     } else {
+            //         return rat.leftBlocked = false
+            //     }
+            //     // if (rat.y > currTile[row]*tileSize && rat.y <= currTile[])
+            //     // if (rat.currCell.y >= curTileCoord.y && rat.y <= curTileCoord.y + this.tileSize){
 
-                // }
-            }
+            //     // }
+                
+          
         }
-            // const curTileCoord = {
+           
+        }
+    
+}
+
+
+setInterval(gameLoop, 250)
+
+const gameWin = () => {
+    if(rat.y >= 480){
+        console.log("you win")
+        const endText = document.getElementById('endgame')
+        endText.innerHTML = "you win"
+        // console.log(endText)
+        endMessage.style.display = 'visible'
+        // console.log(endMessage)
+        setTimeout(timerInterval)
+    }
+}
+
+ // const curTileCoord = {
             // 	x: col * this.tileSize,
             // 	y: row * this.tileSize,
             // }
@@ -393,9 +418,16 @@ function collide() {
                 //block
             //if rat.requestedDirection === ArrowDown && rat.currCell.y + this.tileSize === wallCell
                 //block
-        }
-    
-}
 
 
-setInterval(gameLoop, 1000/60)
+// let collision = 0   
+//                 function checkcollision() {
+//                     let imgd = ctx.getImageData(rat.x, rat.y, tileSize, tileSize);
+//                     let pix = imgd.data;
+//                     for (let i = 0; i < pix.length; i += 4) {
+//                       if (pix[i] == 0) {
+//                         collision = 1;
+//                       }
+//                     }
+//                     console.log(collision)
+//                 }

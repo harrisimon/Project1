@@ -117,16 +117,15 @@ small{
     display: none;
 }
 
-button{
-    position: absolute;
-    bottom: 19em;
-    left: 14.5em;
-
-}
-#greeting,#lose {
+#greeting,#lose,#endgame {
     font-family: 'Rubik Puddles', cursive;
 }
 button{
+    position: relative;
+    bottom: 10px;
+    top: 890px;
+    right: 298px;
+    height: 50px;
     font-size: 2rem;
     font-family: 'Rubik Dirt', sans-serif;
     border-radius: 8px;
