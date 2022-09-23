@@ -1,4 +1,3 @@
-import MoveDirection from "./ratMove.js"
 
 //adding rat to the board
 export default class Rat {
@@ -9,10 +8,10 @@ export default class Rat {
     this.speed = speed,
     this.tileMap = tileMap,
     this.keys = [],
-    this.up = false,
-    this.down = false,
-    this.right = false,
-    this.left = false,
+    this.upBlocked = false,
+    this.downBlocked = false,
+    this.rightBlocked = false,
+    this.leftBlocked = false,
     this.currCell = {
         x: null,
         y: null
@@ -21,22 +20,22 @@ export default class Rat {
 
     document.addEventListener("keydown", this.setDirection)
     document.addEventListener("keyup", this.unsetDirection)
-    this.#loadRatPics()
+    this.loadRatPics()
   }
   draw(ctx) {
 
-    this.respawn()
+
 
     ctx.drawImage(
         this.ratPicArray[this.ratPicIndex],
         this.x,
         this.y,
-        this.tileSize / 1.3,
-        this.tileSize / 1.3
+        this.tileSize,
+        this.tileSize 
     )
   }
 
-  #loadRatPics() {
+  loadRatPics() {
     const ratPic1 = new Image()
     ratPic1.src = "../imgs/ratRight.png"
     const ratPic2 = new Image()
@@ -72,38 +71,45 @@ export default class Rat {
   //this function moves the rat after the key is released and stores the x, y in an object
   //it will also check if the rat is blocked by a wall before allowing movement
   unsetDirection = () => {
-    //if not blocked
-    if (this.requestedMovingDirection === 'ArrowRight'){
-        this.x+=this.tileSize
-        this.requestedMovingDirection = null
-        this.currCell.x = this.x
-        this.currCell.y = this.y 
-
-    //if not blocked
-    } else if (this.requestedMovingDirection === 'ArrowLeft'){
-        this.x-=this.tileSize
-        this.requestedMovingDirection = null
-        this.currCell.x = this.x
-        this.currCell.y = this.y 
-    //if not blocked
-    } else  if (this.requestedMovingDirection === 'ArrowDown'){
-        this.y+=this.tileSize
-        this.requestedMovingDirection = null
-        this.currCell.x = this.x
-        this.currCell.y = this.y 
-    //if not blocked
-    } else if (this.requestedMovingDirection === 'ArrowUp'){
-        this.y-=this.tileSize
-        this.requestedMovingDirection = null
-        this.currCell.x = this.x
-        this.currCell.y = this.y 
+    //if this.right is false
+    if (this.rightBlocked === false){
+        if (this.requestedMovingDirection === 'ArrowRight' && this.x < 416){
+            this.x+=this.tileSize
+            this.requestedMovingDirection = null
+            this.currCell.x = this.x
+            this.currCell.y = this.y 
+    }
+    if (this.leftBlocked === false){
+        if (this.requestedMovingDirection === 'ArrowLeft'&& this.x > 0){
+            this.x-=this.tileSize
+            this.requestedMovingDirection = null
+            this.currCell.x = this.x
+            this.currCell.y = this.y 
+    }
+}
+    if(this.downBlocked === false){
+        if (this.requestedMovingDirection === 'ArrowDown'){
+            this.y+=this.tileSize
+            this.requestedMovingDirection = null
+            this.currCell.x = this.x
+            this.currCell.y = this.y 
     }
 
-  }
-  respawn = () => {
-    //add in collision detection for hazards later
-    // if (this.x === 200){
-    //     this.x = 0
-    // }
+    if(this.upBlocked === false){
+        if (this.requestedMovingDirection === 'ArrowUp' && this.y > 32){
+            this.y-=this.tileSize
+            this.requestedMovingDirection = null
+            this.currCell.x = this.x
+            this.currCell.y = this.y 
+    }
+ 
+    return this.currCell
   }
 }
+//   respawn = () => {
+//     //add in collision detection for hazards later
+//     // if (this.x === 200){
+//     //     this.x = 0
+//     // }
+  }
+    }}

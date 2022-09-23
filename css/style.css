@@ -8,11 +8,16 @@ body{
     overflow: hidden;
 }
 #title{
-    color:rgb(67, 124, 71);
+    animation: titlemove 5s infinite;
+    color:rgb(109, 132, 103);
     font-size: 4rem;
-
-    text-shadow: rgb(83, 154, 111) 1px 0 3px;
+    
     text-align: center;
+}
+@keyframes titlemove {
+    50% {
+        text-shadow: rgb(130, 141, 33) 3px 3px 4px;
+    }
 }
 main{
     /* border: 2px solid pink; */
@@ -28,18 +33,27 @@ canvas{
     justify-content: center;
     box-shadow: 10px 10px 30px grey;
     /* box-shadow:  10px 10px 40px grey; */
+    border-radius: 8px 8px 0 0;
 
 }
 #hud{
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: 'Rubik Dirt', sans-serif;
     display: inline-flex;
     flex-direction: row;
-
+    font-size: medium;
     justify-content: space-between;
+    background-color: rgb(70, 76, 41);
+    color: rgb(215, 208, 156);
+    border-radius: 0 0 8px 8px;
+    box-shadow: 10px 10px 30px grey;
 }
 #grime {
-    /* flex: 1 1 auto; */
-
+    margin: 12px;
+    stroke: 8  black
+}
+#time{
+    margin: 12px;
+    stroke: 8px solid black;
 }
 
 #start-overlay {
@@ -99,4 +113,12 @@ button{
 }
 #greeting,#lose {
     font-family: 'Rubik Puddles', cursive;
+}
+button{
+    font-size: 2rem;
+    font-family: 'Rubik Dirt', sans-serif;
+    border-radius: 8px;
+    font-weight: 100;
+    color: rgb(215, 208, 156);
+    background-color: rgb(115, 90, 15);
 }
