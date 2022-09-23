@@ -89,7 +89,6 @@ class TileMap {
 		[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1],
 	]
 
-
 	//loop through to read tile and draw
 	draw(ctx) {
 		for (let row = 0; row < this.map.length; row++) {
@@ -179,17 +178,16 @@ class TileMap {
 
 //adding rat to the board
 class Rat {
-    constructor(x, y, tileSize, speed, tileMap) {
+    constructor(x, y, tileSize) {
       this.x = x,
       this.y = y,
       this.tileSize = tileSize,
-      this.speed = speed,
       this.tileMap = tileMap,
       this.keys = [],
-      this.upBlocked = false,
-      this.downBlocked = false,
-      this.rightBlocked = false,
-      this.leftBlocked = false,
+      this.upBlocked = true,
+      this.downBlocked = true,
+      this.rightBlocked = true,
+      this.leftBlocked = true,
       this.currCell = {
           x: null,
           y: null
@@ -200,6 +198,23 @@ class Rat {
       document.addEventListener("keyup", this.unsetDirection)
       this.loadRatPics()
     }
+    // getRat() {
+	// 	for (let row = 0; row < tileMap.map.length; row++) {
+	// 		for (let column = 0; column < tileMap.map[row].length; column++) {
+	// 			let tile = tileMap.map[row][column]
+	// 			if (tile === 9) {
+	// 				tileMap.map[row][column] = 0
+	// 				return new Rat(
+	// 					column * this.tileSize,
+	// 					row * this.tileSize,
+	// 					this.tileSize,
+	// 					speed,
+	// 					this
+	// 				)
+	// 			}
+	// 		}
+	// 	}
+	// }
     draw(ctx) {
       ctx.drawImage(
           this.ratPicArray[this.ratPicIndex],
@@ -242,20 +257,21 @@ class Rat {
           this.requestedMovingDirection = 'ArrowDown'
       }
     }
+
     //this function moves the rat after the key is released and stores the x, y in an object
     //it will also check if the rat is blocked by a wall before allowing movement
     unsetDirection = () => {
-      //if this.right is false
-      console.log(this.leftBlocked)
+        wallCollide()
+
       if (this.rightBlocked === false){
-          if (this.requestedMovingDirection === 'ArrowRight' && this.x < 416){
+          if (this.requestedMovingDirection === 'ArrowRight'){
               this.x+=this.tileSize
               this.requestedMovingDirection = null
               this.currCell.x = this.x
               this.currCell.y = this.y 
       }
       if (this.leftBlocked === false){
-          if (this.requestedMovingDirection === 'ArrowLeft'&& this.x > 0){
+          if (this.requestedMovingDirection === 'ArrowLeft'){
               this.x-=this.tileSize
               this.requestedMovingDirection = null
               this.currCell.x = this.x
@@ -271,7 +287,7 @@ class Rat {
       }
   
       if(this.upBlocked === false){
-          if (this.requestedMovingDirection === 'ArrowUp' && this.y > 32){
+          if (this.requestedMovingDirection === 'ArrowUp'){
               this.y-=this.tileSize
               this.requestedMovingDirection = null
               this.currCell.x = this.x
@@ -323,67 +339,92 @@ class WaterHazard {
             this.water.src = "../imgs/water-spout.png"
             this.image = this.water
         }
-
     }
 
 
 
 //instantiating tile map, rat, water hazards
 const tileMap = new TileMap(tileSize)
-const rat = tileMap.getRat(speed)
-const water = tileMap.getWater(active)
 tileMap.setCanvasSize(canvas)
+const ratso = new Rat
+const rat = tileMap.getRat()
+// ratso.getRat(speed)
+const water = tileMap.getWater(active)
 
+//make rat before game loop
 function gameLoop(){
     tileMap.draw(ctx)
-    collide()
+    wallCollide()
     rat.draw(ctx)
+    // ratso.getRat(speed)
+    ratso.draw(ctx)
     water.forEach(water=>water.draw(ctx))
-    // checkcollision()
+
     // gameWin()
-    // console.log(water[0].active)
+
 
 }
 
 
-function collide() {
+function wallCollide() {
+    const ratPosX = rat.x / tileSize
+    const ratPosY = rat.y / tileSize
 
-    for (let row = 0; row < 14; row++) {
-        for (let col = 0; col < tileMap.map[row].length; col++) {   
-             
-            if(tileMap.map[row][col]===1){
-                // console.log(currTile)
-                let x = col * tileSize
-                let y = row * tileSize
-                // console.log(x, y)
+    if(tileMap.map[ratPosY]?.[ratPosX - 1]===0){
 
-                // console.log("yes")
-						// this.tileSize,
-						// speed,
-						// this
-                if (rat.x >= x && rat.x < x + tileSize && rat.y > y && rat.y < y -tileSize){
-                    console.log("hello")
-                    return rat.leftBlocked = true
-                }
-                // if can't go up
-                //return rat blocked up
-                //
-            
-                }
-            //         console.log(rat.x)
-            //         return rat.leftBlocked = true
-            //     } else {
-            //         return rat.leftBlocked = false
-            //     }
-            //     // if (rat.y > currTile[row]*tileSize && rat.y <= currTile[])
-            //     // if (rat.currCell.y >= curTileCoord.y && rat.y <= curTileCoord.y + this.tileSize){
+        rat.leftBlocked = false
+    }else {
+        rat.leftBlocked = true
+    }
+    if(tileMap.map[ratPosY]?.[ratPosX+1]===0){
+        rat.rightBlocked = false
+    } else {
+        rat.rightBlocked = true   
+    }
+    if(tileMap.map[ratPosY + 1]?.[ratPosX]===0){
+        rat.downBlocked = false
+    } else {
+        rat.downBlocked = true
+    }
+    if(tileMap.map[ratPosY - 1]?.[ratPosX]===0){
+        rat.upBlocked = false
 
-            //     // }
-                
-          
-        }
-           
-        }
+    } else  {
+
+        rat.upBlocked = true
+    }
+    
+}
+console.log(water[0].active)
+function waterCollide() {
+
+    const ratPosX = rat.x / tileSize
+    const ratPosY = rat.y / tileSize
+
+
+    if(tileMap.map[ratPosY]?.[ratPosX]===3 && water[0].active){
+
+        console.log("ouch")
+    }else {
+        
+    }
+    if(tileMap.map[ratPosY]?.[ratPosX]===3){
+        
+    } else {
+        rat.rightBlocked = true   
+    }
+    if(tileMap.map[ratPosY]?.[ratPosX]===3){
+        rat.downBlocked = false
+    } else {
+        rat.downBlocked = true
+    }
+    if(tileMap.map[ratPosY]?.[ratPosX]==3){
+        rat.upBlocked = false
+
+    } else  {
+
+        rat.upBlocked = true
+    }
     
 }
 
