@@ -18,7 +18,7 @@ const time = document.getElementById("sec")
 
 const startMessage = document.getElementById("start-overlay")
 
-let startTime = 5
+let startTime = 90
 const countDown = setInterval(function () {
 	if (startTime <= 0) {
 		clearInterval(countDown)
@@ -38,7 +38,8 @@ const resetButton = document.getElementById("reset")
 resetButton.addEventListener("click", () => {
 	//add logic for resetting gameloop
 	console.log("reset")
-	;(ratso.x = 0), (ratso.y = tileSize)
+	rats.x = 0,
+    rat.y = tileSize
 	startTime = 60
 	grime = 3
 	gameLoop()
@@ -112,24 +113,7 @@ class TileMap {
 			size
 		)
 	}
-	//adding rat to tile map
-	// getRat(speed) {
-	// 	for (let row = 0; row < this.map.length; row++) {
-	// 		for (let column = 0; column < this.map[row].length; column++) {
-	// 			let tile = this.map[row][column]
-	// 			if (tile === 9) {
-	// 				this.map[row][column] = 0
-	// 				return new Rat(
-	// 					column * this.tileSize,
-	// 					row * this.tileSize,
-	// 					this.tileSize,
-	// 					speed,
-	// 					this
-	// 				)
-	// 			}
-	// 		}
-	// 	}
-	// }
+
 	//adding water hazard to tile map
 	getWater() {
 		const water = []
@@ -162,50 +146,33 @@ class TileMap {
 //adding rat to the board
 class Rat {
 	constructor(x, y, tileSize) {
-		;(this.x = x),
-			(this.y = y),
-			(this.tileSize = tileSize),
-			(this.keys = []),
-			(this.upBlocked = true),
-			(this.downBlocked = true),
-			(this.rightBlocked = true),
-			(this.leftBlocked = true),
-			(this.ratPicIndex = 0),
-			(this.drawRat = function () {
-				ctx.drawImage(
-					this.ratPicArray[this.ratPicIndex],
-					0,
-					0,
-					tileSize,
-					tileSize,
-					this.x,
-					this.y,
-					tileSize,
-					tileSize
-				)
-			})
+		this.x = x,
+        this.y = y,
+        this.tileSize = tileSize,
+        this.keys = [],
+        this.upBlocked = true,
+        this.downBlocked = true,
+        this.rightBlocked = true,
+        this.leftBlocked = true,
+        this.ratPicIndex = 0,
+        this.drawRat = function () {
+            ctx.drawImage(
+                this.ratPicArray[this.ratPicIndex],
+                0,
+                0,
+                tileSize,
+                tileSize,
+                this.x,
+                this.y,
+                tileSize,
+                tileSize
+            )
+        }
 
 		document.addEventListener("keydown", this.setDirection)
 		document.addEventListener("keyup", this.unsetDirection)
 		this.loadRatPics()
 	}
-	// getRat() {
-	// 	for (let row = 0; row < tileMap.map.length; row++) {
-	// 		for (let column = 0; column < tileMap.map[row].length; column++) {
-	// 			let tile = tileMap.map[row][column]
-	// 			if (tile === 9) {
-	// 				tileMap.map[row][column] = 0
-	// 				return new Rat(
-	// 					column * this.tileSize,
-	// 					row * this.tileSize,
-	// 					this.tileSize,
-	// 					speed,
-	// 					this
-	// 				)
-	// 			}
-	// 		}
-	// 	}
-	// }
 
 	loadRatPics() {
 		const ratPic1 = new Image()
@@ -243,7 +210,7 @@ class Rat {
 	//it will also check if the rat is blocked by a wall before allowing movement
 	unsetDirection = () => {
 		wallCollide()
-
+        waterCollide()
 		if (this.rightBlocked === false) {
 			if (this.requestedMovingDirection === "ArrowRight") {
 				this.x += this.tileSize
@@ -289,8 +256,8 @@ class WaterHazard {
 	}
 	draw(ctx) {
 		//boolean for turning on the water
-		if (Math.random() < 0.15) {
-			this.active = false
+		if (Math.random() < 0.09) {
+			this.active = true
 			ctx.drawImage(
 				this.image,
 				this.x,
@@ -299,7 +266,7 @@ class WaterHazard {
 				this.tileSize
 			)
 		} else {
-			this.active = true
+			this.active = false
 		}
 	}
 
@@ -313,7 +280,7 @@ class WaterHazard {
 //instantiating tile map, rat, water hazards
 const tileMap = new TileMap(tileSize)
 tileMap.setCanvasSize(canvas)
-const ratso = new Rat(0, 32, tileSize)
+const rat = new Rat(0, 32, tileSize)
 
 const water = tileMap.getWater(active)
 
@@ -347,30 +314,13 @@ function waterCollide() {
 	const ratPosX = rat.x / tileSize
 	const ratPosY = rat.y / tileSize
 
-	if (tileMap.map[ratPosY]?.[ratPosX - 1] === 0 && water.active) {
-		rat.leftBlocked = false
-	} else {
-		rat.leftBlocked = true
-	}
-	if (tileMap.map[ratPosY]?.[ratPosX + 1] === 0) {
-		rat.rightBlocked = false
-	} else {
-		rat.rightBlocked = true
-	}
-	if (tileMap.map[ratPosY + 1]?.[ratPosX] === 0) {
-		rat.downBlocked = false
-	} else {
-		rat.downBlocked = true
-	}
-	if (tileMap.map[ratPosY - 1]?.[ratPosX] === 0) {
-		rat.upBlocked = false
-	} else {
-		rat.upBlocked = true
+	if (tileMap.map[ratPosY][ratPosX] === 3 && water.active) {
+		console.log("hello")
 	}
 }
-
+console.log(water[0])
 const gameWin = () => {
-	if (ratso.y >= 480) {
+	if (rat.y >= 480) {
 		console.log("you win")
 		const endText = document.getElementById("endgame")
 		endText.innerHTML = "you win"
@@ -385,16 +335,16 @@ const gameLose = () => {
 }
 
 //make rat before game loop
-
+// rat.loadRatPics()
 function gameLoop() {
 	tileMap.draw(ctx)
 	wallCollide()
 	water.forEach((water) => water.draw(ctx))
-	ratso.drawRat()
+	rat.drawRat()
 }
-
-const gameInterval = setInterval(gameLoop, 200)
+gameLoop()
+const gameInterval = setInterval(gameLoop, 600)
 document.addEventListener("DOMContentLoaded", function () {
 	//calls the game loop and runs the interval
-	gameInterval
+	gameLoop()
 })
