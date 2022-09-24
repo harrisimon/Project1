@@ -121,10 +121,9 @@ small{
     font-family: 'Rubik Puddles', cursive;
 }
 button{
+
     position: relative;
-    bottom: 10px;
-    top: 890px;
-    right: 298px;
+    top: 20px;
     height: 50px;
     font-size: 2rem;
     font-family: 'Rubik Dirt', sans-serif;
