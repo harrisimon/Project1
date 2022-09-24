@@ -3,22 +3,25 @@ const tileSize = 32
 const speed = 1
 const active = null
 let grime = 3
+let startTime = 60
 
 //getting the canvas
 const game = document.getElementById("canvas")
 const ctx = game.getContext("2d")
-
+//start message
+const startMessage = document.getElementById("start-overlay")
 //getting the grime display
 const grimeDisplay = document.getElementById("grime-display")
-
+const grimeNum = document.getElementById('grime-num')
+grimeNum.innerHTML = grime
 const endMessage = document.getElementById("end-overlay")
-console.log(endMessage)
+
 //getting the timer
 const time = document.getElementById("sec")
 
-const startMessage = document.getElementById("start-overlay")
 
-let startTime = 90
+
+
 const countDown = setInterval(function () {
 	if (startTime <= 0) {
 		clearInterval(countDown)
@@ -26,6 +29,7 @@ const countDown = setInterval(function () {
 	}
 	document.getElementById("sec").innerHTML = startTime
 	startTime -= 1
+    grimeNum.innerHTML = grime
 }, 1000)
 
 const messageOff = () => {
@@ -38,11 +42,21 @@ const resetButton = document.getElementById("reset")
 resetButton.addEventListener("click", () => {
 	//add logic for resetting gameloop
 	console.log("reset")
-	rats.x = 0,
+	rat.x = 0,
     rat.y = tileSize
-	startTime = 60
-	grime = 3
+    startTime = 60
+    grime = 3
+    const countDown = setInterval(function () {
+        if (startTime <= 0) {
+            clearInterval(countDown)
+            gameLose()
+        }
+        document.getElementById("sec").innerHTML = startTime
+        startTime -= 1
+        grimeNum.innerHTML = grime
+    }, 1000)
 	gameLoop()
+
 })
 
 class TileMap {
@@ -62,7 +76,7 @@ class TileMap {
 		[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
 		[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 1],
 		[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 3, 1],
-		[1, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 3, 0, 1],
+		[1, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
 		[1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
 		[1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
 		[1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1],
@@ -72,11 +86,11 @@ class TileMap {
 		[1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 0, 0, 1],
 		[1, 0, 1, 0, 3, 0, 1, 0, 3, 0, 1, 0, 0, 0, 1],
 		[1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 3, 1],
-		[1, 3, 0, 0, 3, 0, 3, 0, 0, 3, 0, 0, 0, 0, 1],
+		[1, 3, 3, 0, 3, 0, 3, 3, 0, 3, 0, 0, 0, 0, 1],
 		[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1],
 	]
 
-	//loop through to read tile and draw
+	//loop through to read tile and draw either path or wall
 	draw(ctx) {
 		for (let row = 0; row < this.map.length; row++) {
 			for (let column = 0; column < this.map[row].length; column++) {
@@ -143,7 +157,7 @@ class TileMap {
 	}
 }
 
-//adding rat to the board
+//rat class for our grimey friend
 class Rat {
 	constructor(x, y, tileSize) {
 		this.x = x,
@@ -186,7 +200,7 @@ class Rat {
 		this.ratPicArray = [ratPic1, ratPic2, ratPic3, ratPic4]
 	}
 
-	//changes the rat picture and updated the request
+	//changes the rat picture and updates the request
 	setDirection = (event) => {
 		if (event.key === "ArrowRight") {
 			this.requestedMovingDirection = "ArrowRight"
@@ -206,8 +220,9 @@ class Rat {
 		}
 	}
 
-	//this function moves the rat after the key is released and stores the x, y in an object
-	//it will also check if the rat is blocked by a wall before allowing movement
+	//this function moves the rat after the key is released
+	//it also runs a check before trying to move if the rat is blocked by a wall before allowing movement
+    //checks for a water collision as well
 	unsetDirection = () => {
 		wallCollide()
         waterCollide()
@@ -238,25 +253,19 @@ class Rat {
 	}
 }
 
-//   respawn = () => {
-//     //add in collision detection for hazards later
-//     // if (colliding with water tile and water[idx].active === true){
-//     //     this.x = 0
-//      grime-=1
-//     // }
-
+//creates waterspouts
 class WaterHazard {
 	constructor(x, y, tileSize, tileMap, active) {
-		;(this.x = x),
-			(this.y = y),
-			(this.tileSize = tileSize),
-			(this.active = active),
-			(this.tileMap = tileMap),
+		this.x = x,
+			this.y = y,
+			this.tileSize = tileSize,
+			this.active = active,
+			this.tileMap = tileMap,
 			this.loadWater()
 	}
 	draw(ctx) {
-		//boolean for turning on the water
-		if (Math.random() < 0.09) {
+		//boolean for turning on the water aka drawing it
+		if (Math.random() < 0.25) {
 			this.active = true
 			ctx.drawImage(
 				this.image,
@@ -281,9 +290,9 @@ class WaterHazard {
 const tileMap = new TileMap(tileSize)
 tileMap.setCanvasSize(canvas)
 const rat = new Rat(0, 32, tileSize)
-
 const water = tileMap.getWater(active)
 
+//function to detect walls, using cells rather than coordinates
 function wallCollide() {
 	const ratPosX = rat.x / tileSize
 	const ratPosY = rat.y / tileSize
@@ -309,18 +318,20 @@ function wallCollide() {
 		rat.upBlocked = true
 	}
 }
-
+//function for checking if rat is on a water tile aka gets sprayed
+//moves rat to beginning of maze and lowers grime by 1
 function waterCollide() {
-	const ratPosX = rat.x / tileSize
-	const ratPosY = rat.y / tileSize
+    water.forEach(function(water){
+        if(rat.x === water.x && rat.y === water.y && water.active === true)
+        {
+            rat.x = 0, rat.y = 32
+            grime-=1
+        }})
+    }
 
-	if (tileMap.map[ratPosY][ratPosX] === 3 && water.active) {
-		console.log("hello")
-	}
-}
-console.log(water[0])
+//if rat reaches the end of the maze displays a message
 const gameWin = () => {
-	if (rat.y >= 480) {
+	if (rat.y >= 448) {
 		console.log("you win")
 		const endText = document.getElementById("endgame")
 		endText.innerHTML = "you win"
@@ -328,22 +339,31 @@ const gameWin = () => {
 		// setTimeout(timerInterval)
 	}
 }
+//check if time is out or grime is at zero
 const gameLose = () => {
-	const endText = document.getElementById("endgame")
-	endText.innerHTML = "You lose!"
-	endMessage.style.display = "visible"
+    if(startTime === 0 || grime === 0){
+        const endText = document.getElementById("endgame")
+        endText.innerHTML = "You lose!"
+        endMessage.style.display = "visible"
+
+    }
 }
 
 //make rat before game loop
-// rat.loadRatPics()
+//game loop
 function gameLoop() {
 	tileMap.draw(ctx)
 	wallCollide()
+    waterCollide()
 	water.forEach((water) => water.draw(ctx))
 	rat.drawRat()
+    gameWin()
+    gameLose()
 }
+//runs the loop
 gameLoop()
-const gameInterval = setInterval(gameLoop, 600)
+//game loop speed
+const gameInterval = setInterval(gameLoop, 500)
 document.addEventListener("DOMContentLoaded", function () {
 	//calls the game loop and runs the interval
 	gameLoop()
