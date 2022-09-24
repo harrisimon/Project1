@@ -1,3 +1,23 @@
+
+#grime-top{
+    width:100vw;
+    height:250px;
+    position:relative;
+    -webkit-animation:glide 2s ease-in-out alternate infinite;
+ }
+ 
+ @-webkit-keyframes glide  {
+    from {
+       left:0px;
+       top:-15px;
+    }
+    
+    to {
+       left:0px;
+       top:-8px;
+    }
+ 
+ }
 body{
     font-family: 'Rubik Puddles', cursive;
     font-weight: 100;
@@ -11,7 +31,7 @@ body{
     animation: titlemove 5s infinite;
     color:rgb(109, 132, 103);
     font-size: 4rem;
-    
+    margin: 0
     text-align: center;
 }
 @keyframes titlemove {
@@ -22,10 +42,12 @@ body{
 main{
     /* border: 2px solid pink; */
     display: flex;
-    /* justify-content: flex-start; */
     flex-flow: column wrap;
-    justify-content: center;
+    justify-content: flex-start;
     height: 75vh;
+    margin: -10px 0 0 0;
+    align-items: center;
+
 
 }
 canvas{
@@ -34,6 +56,8 @@ canvas{
     box-shadow: 10px 10px 30px grey;
     /* box-shadow:  10px 10px 40px grey; */
     border-radius: 8px 8px 0 0;
+    width: 500px;
+    height: 500px;
 
 }
 #hud{
@@ -46,6 +70,7 @@ canvas{
     color: rgb(215, 208, 156);
     border-radius: 0 0 8px 8px;
     box-shadow: 10px 10px 30px grey;
+    width: 500px;
 }
 #grime {
     margin: 12px;
@@ -65,13 +90,35 @@ canvas{
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: rgba(0,0,0,.9);
+    background-color: rgba(39, 83, 61, 0.9);
     z-index: 1;
     cursor: pointer;   
 }
-#end-overlay {
+#lose-message {
     position: fixed;
-    display: none;
+    display: visible;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(39, 83, 61, 0.9);
+    z-index: 1;
+    font-family: 'Rubik', sans-serif;
+    position: absolute;
+    top: 35%;
+    left: 50%;
+    font-size: 50px;
+    color: white;
+    background-color: black;
+    border-radius: 15px;
+    transform: translate(-50%,-50%);
+    -ms-transform: translate(-50%,-50%);
+    text-align: center;  
+}
+/* #end-overlay {
+    position: fixed;
     width: 100%;
     height: 100%;
     top: 0;
@@ -81,7 +128,7 @@ canvas{
     background-color: rgba(0,0,0,.9);
     z-index: 3;
   
-}
+} */
 #start-text{
     font-family: 'Rubik', sans-serif;
     position: absolute;
@@ -89,6 +136,8 @@ canvas{
     left: 50%;
     font-size: 50px;
     color: white;
+    background-color: black;
+    border-radius: 15px;
     transform: translate(-50%,-50%);
     -ms-transform: translate(-50%,-50%);
     z-index:2;
@@ -132,3 +181,7 @@ button{
     color: rgb(215, 208, 156);
     background-color: rgb(115, 90, 15);
 }
+audio{
+    display: none;
+}
+

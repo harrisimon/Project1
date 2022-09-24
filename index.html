@@ -19,11 +19,14 @@
       <link href="https://fonts.googleapis.com/css2?family=Rubik+Dirt&display=swap" rel="stylesheet">
       <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Rubik+Wet+Paint&display=swap" rel="stylesheet">
+    <link rel="shortcut icon" href="#">
   </head>
   <body>
     <div id="container">
+      <div><img id="grime-top" src="./imgs/grime.png"/></div>
       <main>
-        <aside><h1 id="title">Sewer Rat!</h1></aside>
+        <h1 id="title">Sewer Rat!</h1>
+        
         <canvas id="canvas">
           <!--game goes here-->
         </canvas>
@@ -38,7 +41,7 @@
           <img id="rat" src="../imgs/rat.png" />
           <img id="water" src="../imgs/water-spout.png" />
           <span id="time"
-            ><h2><a id="sec">60 </a> Time</h2></span>
+            ><h2><a id="sec"> </a> Time</h2></span>
         </div>
       </main>
     <div id="start-overlay">
@@ -49,19 +52,13 @@
             <small>Click to start, arrows to move.</small>
           </p>
         </div> 
-
+        <div id="end-overlay"></div>
+        
     </div>
-    <div id="end-overlay">
-        <div id="end-text">
-          <h1 id="endgame"></h1>
-          <p>
-            Click to try again.<br />
-
-          </p>
-        </div> 
-  </div>
 
 
+    <audio id="squeak" controls="display:none"><source src="./sfx/rat-squeak.mp3" type="audio/mpeg"></audio>
+    <audio id="splash" controls="display:none"><source src="./sfx/splash_rat.mp3" type="audio/mpeg"></audio>
     <script src="js/allGame.js" type="module" async defer></script>
   </body>
 </html>

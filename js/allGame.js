@@ -18,42 +18,40 @@ const endMessage = document.getElementById("end-overlay")
 
 //getting the timer
 const time = document.getElementById("sec")
+time.innerHTML = startTime
 
 
-
-
-const countDown = setInterval(function () {
-	if (startTime <= 0) {
-		clearInterval(countDown)
-		gameLose()
-	}
-	document.getElementById("sec").innerHTML = startTime
-	startTime -= 1
-    grimeNum.innerHTML = grime
-}, 1000)
 
 const messageOff = () => {
 	startMessage.style.display = "none"
+    const countDown = setInterval(function () {
+        time.innerHTML = startTime
+        startTime -= 1
+        grimeNum.innerHTML = grime
+        if (startTime < 0) {
+            clearInterval(countDown)
+            gameLose()
+        }
+    }, 1000)
 }
 document.getElementById("start-overlay").addEventListener("click", messageOff)
 
 //getting the reset button
 const resetButton = document.getElementById("reset")
 resetButton.addEventListener("click", () => {
-	//add logic for resetting gameloop
-	console.log("reset")
 	rat.x = 0,
     rat.y = tileSize
     startTime = 60
     grime = 3
+    const gameInterval = setInterval(gameLoop, 500)
     const countDown = setInterval(function () {
-        if (startTime <= 0) {
-            clearInterval(countDown)
-            gameLose()
-        }
         document.getElementById("sec").innerHTML = startTime
         startTime -= 1
         grimeNum.innerHTML = grime
+        if (startTime === 0) {
+            clearInterval(countDown)
+            gameLose()
+        }
     }, 1000)
 	gameLoop()
 
@@ -80,7 +78,7 @@ class TileMap {
 		[1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
 		[1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
 		[1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1],
-		[1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 3, 3, 1],
+		[1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
 		[1, 0, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1],
 		[1, 3, 1, 0, 1, 0, 3, 0, 1, 0, 0, 0, 1, 1, 1],
 		[1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 0, 0, 1],
@@ -163,7 +161,6 @@ class Rat {
 		this.x = x,
         this.y = y,
         this.tileSize = tileSize,
-        this.keys = [],
         this.upBlocked = true,
         this.downBlocked = true,
         this.rightBlocked = true,
@@ -182,7 +179,6 @@ class Rat {
                 tileSize
             )
         }
-
 		document.addEventListener("keydown", this.setDirection)
 		document.addEventListener("keyup", this.unsetDirection)
 		this.loadRatPics()
@@ -200,57 +196,32 @@ class Rat {
 		this.ratPicArray = [ratPic1, ratPic2, ratPic3, ratPic4]
 	}
 
-	//changes the rat picture and updates the request
+	//moves the rat, checks for blocks, collisions, and water
+    //plays lil' squeaks
 	setDirection = (event) => {
-		if (event.key === "ArrowRight") {
-			this.requestedMovingDirection = "ArrowRight"
+        wallCollide()
+        waterCollide()
+		if (event.key === "ArrowRight" && this.rightBlocked === false) {
 			this.ratPicIndex = 0
-		} else if (event.key === "ArrowLeft") {
-			this.keys.push(event.key)
-			this.requestedMovingDirection = "ArrowLeft"
+            document.getElementById('squeak').play()
+            this.x += this.tileSize
+		} else if (event.key === "ArrowLeft" && this.leftBlocked === false) {
 			this.ratPicIndex = 2
-		} else if (event.key === "ArrowUp") {
-			this.keys.push(event.key)
+            document.getElementById('squeak').play()
+            this.x -= this.tileSize
+		} else if (event.key === "ArrowUp" && this.upBlocked === false) {
 			this.requestedMovingDirection = "ArrowUp"
 			this.ratPicIndex = 3
-		} else if (event.key === "ArrowDown") {
-			this.keys.push(event.key)
+            document.getElementById('squeak').play()
+            this.y -= this.tileSize
+		} else if (event.key === "ArrowDown" && this.downBlocked === false) {
 			this.ratPicIndex = 1
 			this.requestedMovingDirection = "ArrowDown"
+            document.getElementById('squeak').play()
+            this.y += this.tileSize
 		}
 	}
 
-	//this function moves the rat after the key is released
-	//it also runs a check before trying to move if the rat is blocked by a wall before allowing movement
-    //checks for a water collision as well
-	unsetDirection = () => {
-		wallCollide()
-        waterCollide()
-		if (this.rightBlocked === false) {
-			if (this.requestedMovingDirection === "ArrowRight") {
-				this.x += this.tileSize
-				this.requestedMovingDirection = null
-			}
-		}
-		if (this.leftBlocked === false) {
-			if (this.requestedMovingDirection === "ArrowLeft") {
-				this.x -= this.tileSize
-				this.requestedMovingDirection = null
-			}
-		}
-		if (this.downBlocked === false) {
-			if (this.requestedMovingDirection === "ArrowDown") {
-				this.y += this.tileSize
-				this.requestedMovingDirection = null
-			}
-		}
-		if (this.upBlocked === false) {
-			if (this.requestedMovingDirection === "ArrowUp") {
-				this.y -= this.tileSize
-				this.requestedMovingDirection = null
-			}
-		}
-	}
 }
 
 //creates waterspouts
@@ -265,7 +236,7 @@ class WaterHazard {
 	}
 	draw(ctx) {
 		//boolean for turning on the water aka drawing it
-		if (Math.random() < 0.25) {
+		if (Math.random() < 0.1) {
 			this.active = true
 			ctx.drawImage(
 				this.image,
@@ -320,12 +291,14 @@ function wallCollide() {
 }
 //function for checking if rat is on a water tile aka gets sprayed
 //moves rat to beginning of maze and lowers grime by 1
+//plays a splash if rat gets sprayed
 function waterCollide() {
     water.forEach(function(water){
         if(rat.x === water.x && rat.y === water.y && water.active === true)
         {
-            rat.x = 0, rat.y = 32
+            document.getElementById('splash').play()
             grime-=1
+            rat.x = 0, rat.y = 32
         }})
     }
 
@@ -339,15 +312,8 @@ const gameWin = () => {
 		// setTimeout(timerInterval)
 	}
 }
-//check if time is out or grime is at zero
-const gameLose = () => {
-    if(startTime === 0 || grime === 0){
-        const endText = document.getElementById("endgame")
-        endText.innerHTML = "You lose!"
-        endMessage.style.display = "visible"
 
-    }
-}
+
 
 //make rat before game loop
 //game loop
@@ -360,11 +326,33 @@ function gameLoop() {
     gameWin()
     gameLose()
 }
+
+//check if time is out or grime is at zero
+const gameLose = () => {
+    if(startTime === 0 || grime === 0){
+
+        document.getElementById("sec").innerHTML = 0
+        clearInterval(gameInterval)
+        // clearInterval(gameLoop)
+        console.log("you lose")
+        const loseMessage = document.createElement('div')
+
+        loseMessage.setAttribute('id', 'lose-message')
+        const youLose = document.createElement('h1')
+        youLose.innerHTML = 'You Lose \
+        click to play again'
+        // loseMessage.appendChild(youLose)
+        // const messageBox = getElementById('container')
+        // messageBox.appendChild(loseMessage)
+        // console.log(loseMessage)
+        rat.x = 0
+        rat.y = 32
+    }
+}
 //runs the loop
-gameLoop()
 //game loop speed
 const gameInterval = setInterval(gameLoop, 500)
 document.addEventListener("DOMContentLoaded", function () {
 	//calls the game loop and runs the interval
-	gameLoop()
+
 })
