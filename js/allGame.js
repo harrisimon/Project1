@@ -4,6 +4,8 @@ const speed = 1
 const active = null
 let grime = 3
 let startTime = 60
+let lose = false
+let win = false
 
 //getting the canvas
 const game = document.getElementById("canvas")
@@ -12,7 +14,7 @@ const ctx = game.getContext("2d")
 const startMessage = document.getElementById("start-overlay")
 //getting the grime display
 const grimeDisplay = document.getElementById("grime-display")
-const grimeNum = document.getElementById('grime-num')
+let grimeNum = document.getElementById('grime-num')
 grimeNum.innerHTML = grime
 const endMessage = document.getElementById("end-overlay")
 
@@ -20,42 +22,39 @@ const endMessage = document.getElementById("end-overlay")
 const time = document.getElementById("sec")
 time.innerHTML = startTime
 
+function timer()  {
+    if(startTime>0){
+        startTime -= 1
+        time.innerHTML = startTime
+    }
 
+}
 
 const messageOff = () => {
 	startMessage.style.display = "none"
-    const countDown = setInterval(function () {
-        time.innerHTML = startTime
-        startTime -= 1
-        grimeNum.innerHTML = grime
-        if (startTime < 0) {
-            clearInterval(countDown)
-            gameLose()
-        }
-    }, 1000)
 }
-document.getElementById("start-overlay").addEventListener("click", messageOff)
+
+const countDown = 
+document.getElementById("start-overlay").addEventListener("click",()=>{ 
+    messageOff()
+    setInterval(timer, 1000)
+    })
 
 //getting the reset button
 const resetButton = document.getElementById("reset")
-resetButton.addEventListener("click", () => {
+const reset = () => resetButton.addEventListener("click", () => {
 	rat.x = 0,
     rat.y = tileSize
     startTime = 60
     grime = 3
+    grimeNum.innerHTML = grime
     const gameInterval = setInterval(gameLoop, 500)
-    const countDown = setInterval(function () {
-        document.getElementById("sec").innerHTML = startTime
-        startTime -= 1
-        grimeNum.innerHTML = grime
-        if (startTime === 0) {
-            clearInterval(countDown)
-            gameLose()
-        }
-    }, 1000)
+    clearInterval(gameInterval)
+    clearInterval(countDown)
+    countDown()
 	gameLoop()
-
 })
+reset()
 
 class TileMap {
 	constructor(tileSize) {
@@ -293,11 +292,13 @@ function wallCollide() {
 //moves rat to beginning of maze and lowers grime by 1
 //plays a splash if rat gets sprayed
 function waterCollide() {
+    grimeNum.innerHTML = grime
     water.forEach(function(water){
         if(rat.x === water.x && rat.y === water.y && water.active === true)
         {
             document.getElementById('splash').play()
             grime-=1
+            
             rat.x = 0, rat.y = 32
         }})
     }
@@ -306,16 +307,21 @@ function waterCollide() {
 const gameWin = () => {
 	if (rat.y >= 448) {
 		console.log("you win")
-		const endText = document.getElementById("endgame")
-		endText.innerHTML = "you win"
-		endMessage.style.display = "visible"
-		// setTimeout(timerInterval)
+        clearInterval(gameLoop)
+        clearInterval(timer)
+        const endMessage = document.createElement('div')
+        endMessage.setAttribute('id', 'lose-message')
+        const youLose = document.createElement('h1')
+        youLose.innerHTML = 'You Win! \
+        click to play again'
+        endMessage.appendChild(youLose)
+        const messageBox = document.getElementById('container')
+        messageBox.appendChild(endMessage)
+        messageBox.addEventListener('click', playAgain)
 	}
 }
 
 
-
-//make rat before game loop
 //game loop
 function gameLoop() {
 	tileMap.draw(ctx)
@@ -328,30 +334,38 @@ function gameLoop() {
 }
 
 //check if time is out or grime is at zero
-const gameLose = () => {
+function gameLose() {
     if(startTime === 0 || grime === 0){
-
-        document.getElementById("sec").innerHTML = 0
-        clearInterval(gameInterval)
-        // clearInterval(gameLoop)
-        console.log("you lose")
-        const loseMessage = document.createElement('div')
-
-        loseMessage.setAttribute('id', 'lose-message')
+        // document.getElementById("sec").innerHTML = 0
+        clearInterval(gameLoop)
+        clearInterval(timer)
+        const endMessage = document.createElement('div')
+        endMessage.setAttribute('id', 'lose-message')
         const youLose = document.createElement('h1')
-        youLose.innerHTML = 'You Lose \
+        youLose.innerHTML = 'You Lose! \
         click to play again'
-        // loseMessage.appendChild(youLose)
-        // const messageBox = getElementById('container')
-        // messageBox.appendChild(loseMessage)
-        // console.log(loseMessage)
-        rat.x = 0
-        rat.y = 32
+        endMessage.appendChild(youLose)
+        const messageBox = document.getElementById('container')
+        messageBox.appendChild(endMessage)
+        messageBox.addEventListener('click', playAgain)
     }
 }
+
+const tryAgain = document.getElementById('lose-message')
+
+const playAgain =  ()=>{
+    const messageBox = document.getElementById('container')
+    messageBox.removeChild(messageBox.lastChild),
+    rat.x = 0,
+    rat.y = tileSize
+    startTime = 60
+    // grime = 3
+    gameLoop()
+}
+
 //runs the loop
 //game loop speed
-const gameInterval = setInterval(gameLoop, 500)
+const gameInterval = setInterval(gameLoop, 700)
 document.addEventListener("DOMContentLoaded", function () {
 	//calls the game loop and runs the interval
 

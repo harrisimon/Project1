@@ -2,6 +2,8 @@
 #grime-top{
     width:100vw;
     height:250px;
+    filter: drop-shadow(2px 0 5px rgb(117, 117, 117));
+    -webkit-filter: drop-shadow(2px 0 5px rgb(117, 117, 117));
     position:relative;
     -webkit-animation:glide 2s ease-in-out alternate infinite;
  }
@@ -31,7 +33,7 @@ body{
     animation: titlemove 5s infinite;
     color:rgb(109, 132, 103);
     font-size: 4rem;
-    margin: 0
+ 
     text-align: center;
 }
 @keyframes titlemove {
@@ -94,16 +96,15 @@ canvas{
     z-index: 1;
     cursor: pointer;   
 }
+
 #lose-message {
     position: fixed;
     display: visible;
-    width: 100%;
-    height: 100%;
+    height: 500px;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: rgba(39, 83, 61, 0.9);
     z-index: 1;
     font-family: 'Rubik', sans-serif;
     position: absolute;
@@ -130,6 +131,7 @@ canvas{
   
 } */
 #start-text{
+
     font-family: 'Rubik', sans-serif;
     position: absolute;
     top: 35%;
