@@ -27,14 +27,13 @@ function timer()  {
         startTime -= 1
         time.innerHTML = startTime
     }
-
 }
 
 const messageOff = () => {
 	startMessage.style.display = "none"
 }
 
-const countDown = 
+
 document.getElementById("start-overlay").addEventListener("click",()=>{ 
     messageOff()
     setInterval(timer, 1000)
@@ -67,7 +66,6 @@ class TileMap {
 
 	//1 walls
 	//0 path
-	//9 rat
 	//3 water
 	map = [
 		[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
@@ -98,8 +96,6 @@ class TileMap {
 				} else if (tile === 0) {
 					this.drawPath(ctx, column, row, this.tileSize)
 				}
-				// ctx.strokeStyle = 'yellow'
-				// ctx.strokeRect(column * this.tileSize, row * this.tileSize, this.tileSize, this.tileSize)
 			}
 		}
 	}
@@ -306,15 +302,14 @@ function waterCollide() {
 //if rat reaches the end of the maze displays a message
 const gameWin = () => {
 	if (rat.y >= 448) {
-		console.log("you win")
-        clearInterval(gameLoop)
+        clearInterval(gameInterval)
         clearInterval(timer)
         const endMessage = document.createElement('div')
         endMessage.setAttribute('id', 'lose-message')
-        const youLose = document.createElement('h1')
-        youLose.innerHTML = 'You Win! \
-        click to play again'
-        endMessage.appendChild(youLose)
+        const youWin = document.createElement('h1')
+        youWin.innerHTML = 'You Win! \
+        Click to play again'
+        endMessage.appendChild(youWin)
         const messageBox = document.getElementById('container')
         messageBox.appendChild(endMessage)
         messageBox.addEventListener('click', playAgain)
@@ -337,13 +332,13 @@ function gameLoop() {
 function gameLose() {
     if(startTime === 0 || grime === 0){
         // document.getElementById("sec").innerHTML = 0
-        clearInterval(gameLoop)
+        clearInterval(gameInterval)
         clearInterval(timer)
         const endMessage = document.createElement('div')
         endMessage.setAttribute('id', 'lose-message')
         const youLose = document.createElement('h1')
         youLose.innerHTML = 'You Lose! \
-        click to play again'
+        Click to play again'
         endMessage.appendChild(youLose)
         const messageBox = document.getElementById('container')
         messageBox.appendChild(endMessage)
@@ -359,13 +354,12 @@ const playAgain =  ()=>{
     rat.x = 0,
     rat.y = tileSize
     startTime = 60
-    // grime = 3
-    gameLoop()
+    gameInterval = setInterval(gameLoop, 700)
 }
 
 //runs the loop
 //game loop speed
-const gameInterval = setInterval(gameLoop, 700)
+let gameInterval = setInterval(gameLoop, 700)
 document.addEventListener("DOMContentLoaded", function () {
 	//calls the game loop and runs the interval
 
