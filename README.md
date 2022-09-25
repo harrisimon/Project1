@@ -1,6 +1,5 @@
 # Sewer Rat
 
-
 ## Technologies Used
 For this project I used HTML-canvas, Javascript, and bit of CSS. For the canvas I generated a map through iterating over an array of arrays. For each element in the array a tile type is assigned and drawn. For the water spraying and rat additional classes are drawn. The water is drawn based off of a boolean returning from a Math.random() method. Audio plays when the rat moves or the rat encounters a water splash.
 
@@ -19,3 +18,9 @@ https://freesound.org/people/swordofkings128/sounds/398032/
 
 Squeak sound
 https://freesound.org/people/Breviceps/sounds/445958/
+
+Disco sound
+https://freesound.org/people/szegvari/sounds/595384/
+
+## Images
+All images and artwork is original.

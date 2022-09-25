@@ -28,12 +28,11 @@ function timer()  {
         time.innerHTML = startTime
     }
 }
-
+//turns off the start message
 const messageOff = () => {
 	startMessage.style.display = "none"
 }
-
-
+//starts the timer
 document.getElementById("start-overlay").addEventListener("click",()=>{ 
     messageOff()
     setInterval(timer, 1000)
@@ -55,6 +54,7 @@ const reset = () => resetButton.addEventListener("click", () => {
 })
 reset()
 
+//tile map class for drawing the game board
 class TileMap {
 	constructor(tileSize) {
 		this.tileSize = tileSize
@@ -92,7 +92,6 @@ class TileMap {
 				let tile = this.map[row][column]
 				if (tile === 1) {
 					this.drawWall(ctx, column, row, this.tileSize)
-					// this.allWalls.push({'x': column * this.tileSize, 'y': row * this.tileSize})
 				} else if (tile === 0) {
 					this.drawPath(ctx, column, row, this.tileSize)
 				}
@@ -178,7 +177,7 @@ class Rat {
 		document.addEventListener("keyup", this.unsetDirection)
 		this.loadRatPics()
 	}
-
+    //rat pics for each direction
 	loadRatPics() {
 		const ratPic1 = new Image()
 		ratPic1.src = "../imgs/ratRight.png"
@@ -294,7 +293,6 @@ function waterCollide() {
         {
             document.getElementById('splash').play()
             grime-=1
-            
             rat.x = 0, rat.y = 32
         }})
     }
@@ -305,17 +303,16 @@ const gameWin = () => {
         clearInterval(gameInterval)
         clearInterval(timer)
         const endMessage = document.createElement('div')
-        endMessage.setAttribute('id', 'lose-message')
+        endMessage.setAttribute('id', 'win-message')
         const youWin = document.createElement('h1')
-        youWin.innerHTML = 'You Win! \
-        Click to play again'
+        youWin.innerHTML = 'You Win! <br> Click to play again'
         endMessage.appendChild(youWin)
         const messageBox = document.getElementById('container')
         messageBox.appendChild(endMessage)
         messageBox.addEventListener('click', playAgain)
+        document.getElementById('disco').play()
 	}
 }
-
 
 //game loop
 function gameLoop() {
@@ -331,36 +328,30 @@ function gameLoop() {
 //check if time is out or grime is at zero
 function gameLose() {
     if(startTime === 0 || grime === 0){
-        // document.getElementById("sec").innerHTML = 0
         clearInterval(gameInterval)
         clearInterval(timer)
         const endMessage = document.createElement('div')
         endMessage.setAttribute('id', 'lose-message')
         const youLose = document.createElement('h1')
-        youLose.innerHTML = 'You Lose! \
-        Click to play again'
+        youLose.innerHTML = 'You Lose! <br> Click to play again'
         endMessage.appendChild(youLose)
         const messageBox = document.getElementById('container')
         messageBox.appendChild(endMessage)
         messageBox.addEventListener('click', playAgain)
     }
 }
-
+//reseting the game after win/lose condition
 const tryAgain = document.getElementById('lose-message')
-
 const playAgain =  ()=>{
     const messageBox = document.getElementById('container')
     messageBox.removeChild(messageBox.lastChild),
     rat.x = 0,
     rat.y = tileSize
     startTime = 60
+    grime = 3
     gameInterval = setInterval(gameLoop, 700)
 }
 
-//runs the loop
 //game loop speed
 let gameInterval = setInterval(gameLoop, 700)
-document.addEventListener("DOMContentLoaded", function () {
-	//calls the game loop and runs the interval
 
-})
