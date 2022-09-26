@@ -59,9 +59,9 @@ class TileMap {
 	constructor(tileSize) {
 		this.tileSize = tileSize
 		this.mazePath = new Image()
-		this.mazePath.src = "../imgs/mazePath.png"
+		this.mazePath.src = "./imgs/mazePath.png"
 		this.wall = new Image()
-		this.wall.src = "../imgs/grimeTile.png"
+		this.wall.src = "./imgs/grimeTile.png"
 	}
 
 	//1 walls
@@ -180,13 +180,13 @@ class Rat {
     //rat pics for each direction
 	loadRatPics() {
 		const ratPic1 = new Image()
-		ratPic1.src = "../imgs/ratRight.png"
+		ratPic1.src = "./imgs/rightRight.png"
 		const ratPic2 = new Image()
 		ratPic2.src = "../imgs/ratDown.png"
 		const ratPic3 = new Image()
-		ratPic3.src = "../imgs/ratLeft.png"
+		ratPic3.src = "./imgs/ratLeft.png"
 		const ratPic4 = new Image()
-		ratPic4.src = "../imgs/ratUp.png"
+		ratPic4.src = "./imgs/ratUp.png"
 		this.ratPicArray = [ratPic1, ratPic2, ratPic3, ratPic4]
 	}
 
