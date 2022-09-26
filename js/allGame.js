@@ -180,9 +180,9 @@ class Rat {
     //rat pics for each direction
 	loadRatPics() {
 		const ratPic1 = new Image()
-		ratPic1.src = "./imgs/rightRight.png"
+		ratPic1.src = "./imgs/ratRight.png"
 		const ratPic2 = new Image()
-		ratPic2.src = "../imgs/ratDown.png"
+		ratPic2.src = "./imgs/ratDown.png"
 		const ratPic3 = new Image()
 		ratPic3.src = "./imgs/ratLeft.png"
 		const ratPic4 = new Image()
