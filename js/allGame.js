@@ -230,7 +230,7 @@ class WaterHazard {
 	}
 	draw(ctx) {
 		//boolean for turning on the water aka drawing it
-		if (Math.random() < 0.1) {
+		if (Math.random() < 0.15) {
 			this.active = true
 			ctx.drawImage(
 				this.image,
