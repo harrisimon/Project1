@@ -59,7 +59,7 @@ class TileMap {
 	constructor(tileSize) {
 		this.tileSize = tileSize
 		this.mazePath = new Image()
-		this.mazePath.src = "./imgs/mazePath.png"
+		this.mazePath.src = "imgs/mazePath.png"
 		this.wall = new Image()
 		this.wall.src = "./imgs/grimeTile.png"
 	}
