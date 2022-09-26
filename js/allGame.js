@@ -59,7 +59,7 @@ class TileMap {
 	constructor(tileSize) {
 		this.tileSize = tileSize
 		this.mazePath = new Image()
-		this.mazePath.src = "imgs/mazePath.png"
+		this.mazePath.src = "./imgs/mazePath.png"
 		this.wall = new Image()
 		this.wall.src = "./imgs/grimeTile.png"
 	}
@@ -246,7 +246,7 @@ class WaterHazard {
 
 	loadWater() {
 		this.water = new Image()
-		this.water.src = "../imgs/water-spout.png"
+		this.water.src = "./imgs/water-spout.png"
 		this.image = this.water
 	}
 }
