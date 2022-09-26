@@ -1,7 +1,7 @@
 
 #grime-top{
     width:100vw;
-    height:250px;
+    max-height:100px;
     filter: drop-shadow(2px 0 5px rgb(117, 117, 117));
     -webkit-filter: drop-shadow(2px 0 5px rgb(117, 117, 117));
     position:relative;
@@ -11,12 +11,12 @@
  @-webkit-keyframes glide  {
     from {
        left:0px;
-       top:-15px;
+       top:-20px;
     }
     
     to {
        left:0px;
-       top:-8px;
+       top:-10px;
     }
  
  }
@@ -48,7 +48,6 @@ main{
     display: flex;
     flex-flow: column;
     justify-content: flex-start;
-    height: 75vh;
     margin: -10px 0 0 0;
     align-items: center;
     max-height: fit-content;
